@@ -18,6 +18,7 @@
   "homepage": "https://github.com/rebeccahaf/tropicali#readme",
   "devDependencies": {
     "browser-sync": "^2.27.11",
+    "gh-pages": "^5.0.0",
     "gulp": "^3.9.1",
     "gulp-clean-css": "^4.3.0",
     "gulp-imagemin": "^7.1.0",
