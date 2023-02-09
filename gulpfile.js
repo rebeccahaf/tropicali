@@ -1,23 +1,34 @@
-var gulp = require('gulp')
-var sass = require('gulp-sass')
-var cleanCSS = require('gulp-clean-css')
-var sourcemaps = require('gulp-sourcemaps')
+var gulp = require("gulp")
 
-var browserSync = require('browser-sync').create()
+//css
+var cleanCSS = require("gulp-clean-css")
+var postcss = require("gulp-postcss")
+var sourcemaps = require("gulp-sourcemaps")
+var concat = require("gulp-concat")
 
-var imagemin = require('gulp-imagemin')
+//browser refresh
+var browserSync = require("browser-sync").create()
 
-var ghpages = require('gh-pages')
+//github
+var ghpages = require("gh-pages")
 
-sass.compiler = require('node-sass')
-
-gulp.task("sass", function() {
-    return gulp.src("src/css/app.scss")
+gulp.task("css", function() {
+    return gulp.src([
+        "src/css/reset.css",
+        "src/css/typography.css",
+        "src/css/app.css"
+    ])
     .pipe(sourcemaps.init())
-    .pipe(sass())
+    .pipe(
+        postcss([
+            require("autoprefixer"),
+            require("postcss-preset-env")
+        ])
+    )
+    .pipe(concat("app.css"))
     .pipe(
         cleanCSS({
-            compatibility: 'ie8'
+            compatibility: "ie8"
         })
     )
     .pipe(sourcemaps.write())
@@ -35,28 +46,20 @@ gulp.task("fonts", function() {
         .pipe(gulp.dest("dist/fonts"))
 })
 
-gulp.task("images", function() {
-    return gulp.src("src/img/*")
-        .pipe(imagemin())
-        .pipe(gulp.dest("dist/img"))
-})
-
 gulp.task("watch", function() {
-
     browserSync.init({
         server: {
             baseDir: "dist"
         }
     })
 
-    gulp.watch("src/*.html", ["html"]).on('change', browserSync.reload);
-    gulp.watch("src/css/app.scss", ["sass"])
+    gulp.watch("src/*.html", ["html"]).on("change", browserSync.reload)
+    gulp.watch("src/css/app.css", ["css"])
     gulp.watch("src/fonts/*", ["fonts"])
-    gulp.watch("src/img/*", ["images"])
 })
 
 gulp.task("deploy", function() {
     ghpages.publish("dist")
-})
+});
 
-gulp.task('default', ["html", "sass", "fonts", "images", "watch"])
+gulp.task("default", ["html", "css", "fonts", "watch"])

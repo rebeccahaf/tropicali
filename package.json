@@ -17,13 +17,17 @@
   },
   "homepage": "https://github.com/rebeccahaf/tropicali#readme",
   "devDependencies": {
-    "browser-sync": "^2.27.11",
+    "autoprefixer": "^10.4.13",
+    "browser-sync": "^2.27.5",
     "gh-pages": "^5.0.0",
     "gulp": "^3.9.1",
     "gulp-clean-css": "^4.3.0",
-    "gulp-imagemin": "^7.1.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-postcss": "^9.0.1",
     "gulp-sass": "^4.1.1",
     "gulp-sourcemaps": "^3.0.0",
+    "postcss": "^8.4.21",
+    "postcss-preset-env": "^8.0.1",
     "sass": "^1.58.0"
   }
 }
