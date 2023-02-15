@@ -22,7 +22,13 @@ gulp.task("css", function() {
     .pipe(
         postcss([
             require("autoprefixer"),
-            require("postcss-preset-env")
+            require("postcss-preset-env")({
+                stage: 1,
+                browsers: [
+                    "IE 11",
+                    "last 2 versions"
+                ]
+            })
         ])
     )
     .pipe(concat("app.css"))
@@ -54,7 +60,7 @@ gulp.task("watch", function() {
     })
 
     gulp.watch("src/*.html", ["html"]).on("change", browserSync.reload)
-    gulp.watch("src/css/app.css", ["css"])
+    gulp.watch("src/css/*", ["css"])
     gulp.watch("src/fonts/*", ["fonts"])
 })
 
